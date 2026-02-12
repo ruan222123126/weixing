@@ -1,0 +1,9 @@
+<view class="container">
+  <view class="card">
+    <view class="title">员工登录</view>
+    <view class="sub-title">首版使用微信身份 + 姓名手机号绑定（手机号可触发自动角色开通）</view>
+    <input placeholder="请输入姓名" class="input" bindinput="onNameInput" value="{{name}}" />
+    <input placeholder="请输入手机号（可选）" class="input" type="number" maxlength="11" bindinput="onPhoneInput" value="{{phone}}" />
+    <button class="btn-primary" loading="{{loading}}" bindtap="onLogin">登录</button>
+  </view>
+</view>

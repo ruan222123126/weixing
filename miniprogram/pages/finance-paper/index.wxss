@@ -1,0 +1,19 @@
+.input {
+  border: 1px solid #cbd5e1;
+  border-radius: 14rpx;
+  padding: 16rpx;
+  margin-bottom: 12rpx;
+  background: #fff;
+}
+
+.picker {
+  border: 1px solid #cbd5e1;
+  border-radius: 14rpx;
+  padding: 16rpx;
+  margin-bottom: 12rpx;
+  background: #fff;
+}
+
+button {
+  margin-bottom: 12rpx;
+}

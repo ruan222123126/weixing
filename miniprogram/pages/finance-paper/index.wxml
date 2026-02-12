@@ -1,0 +1,41 @@
+<view class="container">
+  <view class="card">
+    <view class="title">纸质报销登记</view>
+    <input class="input" placeholder="期间 YYYY-MM" data-field="period" bindinput="onInput" value="{{period}}" />
+  </view>
+
+  <view class="card">
+    <view class="row">
+      <view class="sub-title">手工登记</view>
+      <button size="mini" bindtap="goProjectManage">项目管理</button>
+    </view>
+
+    <picker wx:if="{{projectNames.length}}" mode="selector" range="{{projectNames}}" value="{{projectIndex < 0 ? 0 : projectIndex}}" bindchange="onProjectChange">
+      <view class="picker">项目: {{projectId ? projectNames[projectIndex] : '请选择项目'}}</view>
+    </picker>
+    <view class="muted" wx:if="{{!projectNames.length}}">暂无项目，请先到项目管理新增</view>
+
+    <input class="input" placeholder="申请人ID" data-field="applicantId" bindinput="onInput" value="{{applicantId}}" />
+    <input class="input" placeholder="发生日期 YYYY-MM-DD" data-field="occurDate" bindinput="onInput" value="{{occurDate}}" />
+    <input class="input" placeholder="费用类别" data-field="category" bindinput="onInput" value="{{category}}" />
+    <input class="input" type="digit" placeholder="金额" data-field="amount" bindinput="onInput" value="{{amount}}" />
+    <input class="input" type="digit" placeholder="税额" data-field="taxAmount" bindinput="onInput" value="{{taxAmount}}" />
+    <input class="input" placeholder="备注" data-field="remark" bindinput="onInput" value="{{remark}}" />
+    <button class="btn-primary" bindtap="submitManual">提交手工登记</button>
+  </view>
+
+  <view class="card">
+    <view class="sub-title">Excel导入</view>
+    <view class="row"><text class="muted">已选文件</text><text>{{fileName || '未选择'}}</text></view>
+    <button bindtap="chooseExcel">选择Excel</button>
+    <button class="btn-primary" bindtap="submitExcel">开始导入</button>
+  </view>
+
+  <view class="card" wx:if="{{lastJob}}">
+    <view class="sub-title">导入结果</view>
+    <view class="row"><text class="muted">状态</text><text>{{lastJob.status}}</text></view>
+    <view class="row"><text class="muted">成功</text><text>{{lastJob.successCount}}</text></view>
+    <view class="row"><text class="muted">失败</text><text>{{lastJob.failCount}}</text></view>
+    <view class="muted" wx:if="{{lastJob.errors && lastJob.errors.length}}">错误示例: {{lastJob.errors[0]}}</view>
+  </view>
+</view>

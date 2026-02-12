@@ -1,0 +1,28 @@
+<view class="container">
+  <view class="row">
+    <view class="title">我的报销</view>
+    <button size="mini" class="btn-primary" bindtap="goCreate">新建</button>
+  </view>
+
+  <view class="card" wx:for="{{claims}}" wx:key="claimId" data-claim-id="{{item.claimId}}" bindtap="goDetail">
+    <view class="row">
+      <text>项目: {{item.projectId}}</text>
+      <text class="badge {{item.statusClass}}">{{item.statusText}}</text>
+    </view>
+    <view class="row">
+      <text class="muted">报销单: {{item.claimId}}</text>
+    </view>
+    <view class="row">
+      <text class="muted">金额</text>
+      <text>{{item.amountText}}</text>
+    </view>
+    <view class="row">
+      <text class="muted">日期</text>
+      <text>{{item.occurDate}}</text>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{!claims.length && !loading}}">
+    <text class="muted">暂无报销记录</text>
+  </view>
+</view>

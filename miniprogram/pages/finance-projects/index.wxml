@@ -1,0 +1,38 @@
+<view class="container">
+  <view class="card">
+    <view class="title">项目管理</view>
+    <input class="input" placeholder="项目ID" data-field="projectId" bindinput="onInput" value="{{form.projectId}}" />
+    <input class="input" placeholder="项目名称" data-field="name" bindinput="onInput" value="{{form.name}}" />
+    <input class="input" placeholder="项目负责人（可选）" data-field="owner" bindinput="onInput" value="{{form.owner}}" />
+
+    <picker mode="selector" range="{{statusOptions}}" value="{{statusIndex}}" bindchange="onStatusChange">
+      <view class="picker">状态: {{form.status}}</view>
+    </picker>
+
+    <button class="btn-primary" bindtap="saveProject">保存项目</button>
+    <button bindtap="resetForm">清空表单</button>
+  </view>
+
+  <view class="card">
+    <view class="row">
+      <view class="sub-title">项目列表</view>
+      <label class="row">
+        <text class="muted">显示停用</text>
+        <switch checked="{{includeDisabled}}" bindchange="onToggleDisabled" />
+      </label>
+    </view>
+
+    <view class="project-row" wx:for="{{projects}}" wx:key="projectId" 
+      data-project-id="{{item.projectId}}" 
+      data-name="{{item.name}}" 
+      data-owner="{{item.owner}}" 
+      data-status="{{item.status}}" 
+      bindtap="fillForm">
+      <view class="row"><text>{{item.projectId}}</text><text class="badge">{{item.status}}</text></view>
+      <view class="row"><text class="muted">名称</text><text>{{item.name}}</text></view>
+      <view class="row"><text class="muted">负责人</text><text>{{item.owner || '-'}}</text></view>
+    </view>
+
+    <view class="muted" wx:if="{{!projects.length && !loading}}">暂无项目</view>
+  </view>
+</view>

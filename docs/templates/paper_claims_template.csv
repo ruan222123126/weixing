@@ -1,0 +1,3 @@
+projectId,applicantId,occurDate,category,amount,taxAmount,remark
+P1001,u_staff_01,2026-01-10,交通,120.50,6.02,出租车
+P1001,u_staff_02,2026-01-11,餐饮,80,0,客户午餐

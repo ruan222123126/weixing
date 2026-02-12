@@ -1,0 +1,14 @@
+<view class="container">
+  <view class="card">
+    <view class="title">财务工作台</view>
+    <view class="muted">当前角色: {{role}}</view>
+  </view>
+
+  <view class="card">
+    <button class="btn-primary" bindtap="goApprove">待审批报销</button>
+    <button bindtap="goProjects">项目管理</button>
+    <button bindtap="goPaper">纸质报销登记/导入</button>
+    <button bindtap="goReport">月报导出</button>
+    <button bindtap="goSettlement">项目结算</button>
+  </view>
+</view>

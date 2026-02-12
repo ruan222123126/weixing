@@ -1,0 +1,22 @@
+<view class="container">
+  <view class="card">
+    <view class="title">你好，{{user.name || '同事'}}</view>
+    <view class="row">
+      <text class="muted">角色</text>
+      <text class="badge">{{user.role}}</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="sub-title">员工功能</view>
+    <button class="btn-primary" bindtap="goClaimForm">新建报销</button>
+    <button bindtap="goMyClaims">我的报销</button>
+  </view>
+
+  <view class="card" wx:if="{{isFinance}}">
+    <view class="sub-title">财务功能</view>
+    <button class="btn-primary" bindtap="goFinanceDashboard">进入财务工作台</button>
+  </view>
+
+  <button class="btn-danger" bindtap="onLogout">退出登录</button>
+</view>

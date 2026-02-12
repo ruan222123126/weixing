@@ -1,0 +1,20 @@
+<view class="container">
+  <view class="card">
+    <view class="title">月度报表导出</view>
+    <input class="input" placeholder="期间 YYYY-MM" data-field="period" bindinput="onInput" value="{{period}}" />
+
+    <picker mode="selector" range="{{projectNames}}" value="{{projectIndex}}" bindchange="onProjectChange">
+      <view class="picker">项目范围: {{projectNames[projectIndex] || '全部项目'}}</view>
+    </picker>
+
+    <button class="btn-primary" bindtap="generateReport">生成并打开Excel</button>
+  </view>
+
+  <view class="card" wx:if="{{stats}}">
+    <view class="sub-title">统计信息</view>
+    <view class="row"><text class="muted">文件</text><text>{{fileName}}</text></view>
+    <view class="row"><text class="muted">项目汇总行数</text><text>{{stats.summaryCount}}</text></view>
+    <view class="row"><text class="muted">费用明细行数</text><text>{{stats.detailCount}}</text></view>
+    <view class="row"><text class="muted">异常行数</text><text>{{stats.anomalyCount}}</text></view>
+  </view>
+</view>

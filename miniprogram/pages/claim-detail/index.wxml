@@ -1,0 +1,28 @@
+<view class="container" wx:if="{{claim}}">
+  <view class="card">
+    <view class="row">
+      <view class="title">报销详情</view>
+      <text class="badge {{claim.statusClass}}">{{claim.statusText}}</text>
+    </view>
+    <view class="row"><text class="muted">报销单ID</text><text>{{claim.claimId}}</text></view>
+    <view class="row"><text class="muted">项目</text><text>{{claim.projectId}}</text></view>
+    <view class="row"><text class="muted">申请人</text><text>{{claim.applicantId}}</text></view>
+    <view class="row"><text class="muted">金额</text><text>{{claim.amountText}}</text></view>
+    <view class="row"><text class="muted">税额</text><text>{{claim.taxText}}</text></view>
+    <view class="row"><text class="muted">发生日期</text><text>{{claim.occurDate}}</text></view>
+  </view>
+
+  <view class="card">
+    <view class="sub-title">费用明细</view>
+    <view class="row" wx:for="{{items}}" wx:key="itemId">
+      <text>{{item.category}}</text>
+      <text>{{item.amount}}</text>
+    </view>
+  </view>
+
+  <button wx:if="{{canEdit}}" bindtap="goEdit">编辑</button>
+  <button wx:if="{{canEdit}}" class="btn-primary" bindtap="onSubmit">提交</button>
+
+  <button wx:if="{{canFinanceAction}}" class="btn-primary" bindtap="onApprove">财务通过</button>
+  <button wx:if="{{canFinanceAction}}" class="btn-danger" bindtap="onReject">财务驳回</button>
+</view>

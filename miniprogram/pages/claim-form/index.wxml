@@ -1,0 +1,35 @@
+<view class="container">
+  <view class="card">
+    <view class="title">{{claimId ? '编辑报销' : '新建报销'}}</view>
+
+    <picker wx:if="{{projectNames.length}}" mode="selector" range="{{projectNames}}" value="{{projectIndex < 0 ? 0 : projectIndex}}" bindchange="onProjectChange">
+      <view class="picker">项目: {{projectId ? projectNames[projectIndex] : '请选择项目'}}</view>
+    </picker>
+    <view class="muted" wx:if="{{!projectNames.length}}">暂无可用项目，请联系财务先维护项目主数据</view>
+
+    <picker mode="selector" range="{{['电子报销','纸质补录']}}" value="{{claimType === 'electronic' ? 0 : 1}}" bindchange="onTypeChange">
+      <view class="picker">报销类型: {{claimType === 'electronic' ? '电子报销' : '纸质补录'}}</view>
+    </picker>
+
+    <input class="input" placeholder="发生日期 YYYY-MM-DD" data-field="occurDate" bindinput="onFieldInput" value="{{occurDate}}" />
+    <input class="input" placeholder="费用大类（可选）" data-field="costCategory" bindinput="onFieldInput" value="{{costCategory}}" />
+  </view>
+
+  <view class="card">
+    <view class="row">
+      <view class="sub-title">费用明细</view>
+      <button size="mini" class="btn-primary" bindtap="addItem">新增明细</button>
+    </view>
+
+    <view class="item" wx:for="{{items}}" wx:key="index">
+      <input class="input" placeholder="类别" data-idx="{{index}}" data-field="category" bindinput="onItemInput" value="{{item.category}}" />
+      <input class="input" placeholder="金额" type="digit" data-idx="{{index}}" data-field="amount" bindinput="onItemInput" value="{{item.amount}}" />
+      <input class="input" placeholder="税额" type="digit" data-idx="{{index}}" data-field="taxAmount" bindinput="onItemInput" value="{{item.taxAmount}}" />
+      <input class="input" placeholder="备注" data-idx="{{index}}" data-field="remark" bindinput="onItemInput" value="{{item.remark}}" />
+      <button size="mini" data-idx="{{index}}" bindtap="removeItem">删除该条</button>
+    </view>
+  </view>
+
+  <button bindtap="saveDraft" loading="{{loading}}">保存草稿</button>
+  <button class="btn-primary" bindtap="saveAndSubmit" loading="{{loading}}">保存并提交</button>
+</view>

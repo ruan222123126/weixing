@@ -1,0 +1,37 @@
+<view class="container">
+  <view class="card">
+    <view class="row">
+      <view class="title">项目结算</view>
+      <button size="mini" bindtap="goProjectManage">项目管理</button>
+    </view>
+
+    <picker wx:if="{{projectNames.length}}" mode="selector" range="{{projectNames}}" value="{{projectIndex < 0 ? 0 : projectIndex}}" bindchange="onProjectChange">
+      <view class="picker">项目: {{projectId ? projectNames[projectIndex] : '请选择项目'}}</view>
+    </picker>
+    <view class="muted" wx:if="{{!projectNames.length}}">暂无项目，请先到项目管理新增</view>
+
+    <input class="input" placeholder="期间 YYYY-MM" data-field="period" bindinput="onInput" value="{{period}}" />
+
+    <input class="input" type="digit" placeholder="收入金额（用于测试同步）" data-field="revenueAmount" bindinput="onInput" value="{{revenueAmount}}" />
+    <button bindtap="syncRevenue">同步收入（测试模式）</button>
+
+    <input class="input" type="digit" placeholder="人工摊销" data-field="laborAmount" bindinput="onInput" value="{{laborAmount}}" />
+    <input class="input" type="digit" placeholder="税费" data-field="taxFeeAmount" bindinput="onInput" value="{{taxFeeAmount}}" />
+    <button bindtap="savePeriodData">保存人工/税费</button>
+
+    <button class="btn-primary" bindtap="generateSettlement">生成结算</button>
+    <button bindtap="loadSettlement">查询已结算</button>
+  </view>
+
+  <view class="card" wx:if="{{settlement}}">
+    <view class="sub-title">结算结果</view>
+    <view class="row"><text class="muted">收入</text><text>{{settlement.revenueText}}</text></view>
+    <view class="row"><text class="muted">报销成本</text><text>{{settlement.expenseText}}</text></view>
+    <view class="row"><text class="muted">税费</text><text>{{settlement.taxText}}</text></view>
+    <view class="row"><text class="muted">人工摊销</text><text>{{settlement.laborText}}</text></view>
+    <view class="row"><text class="muted">利润</text><text>{{settlement.profitText}}</text></view>
+    <view class="row"><text class="muted">利润率</text><text>{{settlement.profitRateText}}</text></view>
+    <view class="row"><text class="muted">提成比例</text><text>{{settlement.commissionRateText}}</text></view>
+    <view class="row"><text class="muted">提成金额</text><text>{{settlement.commissionText}}</text></view>
+  </view>
+</view>

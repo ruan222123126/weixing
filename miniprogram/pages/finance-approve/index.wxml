@@ -1,0 +1,20 @@
+<view class="container">
+  <view class="title">待审批报销</view>
+
+  <view class="card" wx:for="{{claims}}" wx:key="claimId" data-claim-id="{{item.claimId}}" bindtap="goDetail">
+    <view class="row">
+      <text>{{item.projectId}}</text>
+      <text class="badge {{item.statusClass}}">{{item.statusText}}</text>
+    </view>
+    <view class="row"><text class="muted">申请人</text><text>{{item.applicantId}}</text></view>
+    <view class="row"><text class="muted">金额</text><text>{{item.amountText}}</text></view>
+    <view class="row">
+      <button size="mini" class="btn-primary" data-claim-id="{{item.claimId}}" catchtap="fastApprove">通过</button>
+      <button size="mini" class="btn-danger" data-claim-id="{{item.claimId}}" catchtap="fastReject">驳回</button>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{!claims.length && !loading}}">
+    <text class="muted">暂无待审批单据</text>
+  </view>
+</view>
