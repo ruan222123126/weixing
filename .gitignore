@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local environment
+.env
+.env.*
+
+# IDE / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# WeChat DevTools local config
+project.private.config.json
+
+# Test artifacts
+coverage/
+.nyc_output/
+
+# Generated cloudfunction artifacts (created by prepare:cloudfunctions)
+cloudfunctions/*/_shared/
+cloudfunctions/*/package.json
