@@ -5,7 +5,20 @@ const { createCloudStore } = require('./store-cloud');
 const { nowISO, createId } = require('./utils');
 
 function resolveOpenId(event = {}, context = {}) {
-  return event.openid || context.OPENID || (context.weixinContext && context.weixinContext.OPENID) || null;
+  const fromEvent = event.openid;
+  const fromContext = context.OPENID || (context.weixinContext && context.weixinContext.OPENID);
+  if (fromEvent || fromContext) {
+    return fromEvent || fromContext;
+  }
+
+  // Fallback for runtimes where OPENID is not injected into handler context.
+  try {
+    const cloud = require('wx-server-sdk');
+    const wxContext = typeof cloud.getWXContext === 'function' ? cloud.getWXContext() : null;
+    return (wxContext && wxContext.OPENID) || null;
+  } catch (error) {
+    return null;
+  }
 }
 
 function createRuntimeServices({ event = {}, context = {} } = {}) {
