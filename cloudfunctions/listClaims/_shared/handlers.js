@@ -235,7 +235,18 @@ async function upsertClaimWithItems(event, services, currentUser) {
 
 async function authLogin(event, services) {
   const openid = event.openid || (services.resolveOpenId && services.resolveOpenId());
-  assert(openid, '缺少 openid，无法登录');
+  if (!openid) {
+    const sourceInfo = services.inspectOpenIdSources ? services.inspectOpenIdSources() : null;
+    console.error('[authLogin] missing openid', sourceInfo || {
+      hasEventOpenid: Boolean(event && event.openid)
+    });
+    throw new AppError(
+      '缺少 openid，无法登录。请关闭云函数本地调试，并确认已在微信开发者工具选择正确云环境后再试。',
+      'UNAUTHORIZED',
+      401,
+      sourceInfo
+    );
+  }
 
   const now = services.now();
   let user = await services.store.findOne('users', { openid });

@@ -4,14 +4,7 @@ const { createMemoryStore } = require('./store-memory');
 const { createCloudStore } = require('./store-cloud');
 const { nowISO, createId } = require('./utils');
 
-function resolveOpenId(event = {}, context = {}) {
-  const fromEvent = event.openid;
-  const fromContext = context.OPENID || (context.weixinContext && context.weixinContext.OPENID);
-  if (fromEvent || fromContext) {
-    return fromEvent || fromContext;
-  }
-
-  // Fallback for runtimes where OPENID is not injected into handler context.
+function getWxContextOpenId() {
   try {
     const cloud = require('wx-server-sdk');
     const wxContext = typeof cloud.getWXContext === 'function' ? cloud.getWXContext() : null;
@@ -19,6 +12,22 @@ function resolveOpenId(event = {}, context = {}) {
   } catch (error) {
     return null;
   }
+}
+
+function inspectOpenIdSources(event = {}, context = {}) {
+  return {
+    eventOpenid: event.openid || null,
+    contextOpenid: context.OPENID || null,
+    weixinContextOpenid: (context.weixinContext && context.weixinContext.OPENID) || null,
+    wxContextOpenid: getWxContextOpenId(),
+    eventKeys: Object.keys(event || {}),
+    contextKeys: Object.keys(context || {})
+  };
+}
+
+function resolveOpenId(event = {}, context = {}) {
+  const sources = inspectOpenIdSources(event, context);
+  return sources.eventOpenid || sources.contextOpenid || sources.weixinContextOpenid || sources.wxContextOpenid || null;
 }
 
 function createRuntimeServices({ event = {}, context = {} } = {}) {
@@ -45,11 +54,13 @@ function createRuntimeServices({ event = {}, context = {} } = {}) {
       adminPhones: (process.env.ADMIN_PHONES || '').split(',').map((v) => v.trim()).filter(Boolean),
       financePhones: (process.env.FINANCE_PHONES || '').split(',').map((v) => v.trim()).filter(Boolean)
     },
-    resolveOpenId: () => resolveOpenId(event, context)
+    resolveOpenId: () => resolveOpenId(event, context),
+    inspectOpenIdSources: () => inspectOpenIdSources(event, context)
   };
 }
 
 module.exports = {
   createRuntimeServices,
-  resolveOpenId
+  resolveOpenId,
+  inspectOpenIdSources
 };
