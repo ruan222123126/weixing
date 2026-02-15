@@ -31,11 +31,11 @@
     <button class="btn-primary" bindtap="submitExcel">开始导入</button>
   </view>
 
-  <view class="card" wx:if="{{lastJob}}">
+  <view class="card result-card" wx:if="{{lastJob}}">
     <view class="sub-title">导入结果</view>
-    <view class="row"><text class="muted">状态</text><text>{{lastJob.status}}</text></view>
-    <view class="row"><text class="muted">成功</text><text>{{lastJob.successCount}}</text></view>
-    <view class="row"><text class="muted">失败</text><text>{{lastJob.failCount}}</text></view>
-    <view class="muted" wx:if="{{lastJob.errors && lastJob.errors.length}}">错误示例: {{lastJob.errors[0]}}</view>
+    <view class="row result-row"><text class="muted">状态</text><text class="result-value">{{lastJob.status}}</text></view>
+    <view class="row result-row"><text class="muted">成功</text><text class="result-chip success">{{lastJob.successCount}}</text></view>
+    <view class="row result-row"><text class="muted">失败</text><text class="result-chip fail">{{lastJob.failCount}}</text></view>
+    <view class="muted result-error" wx:if="{{lastJob.errors && lastJob.errors.length}}">错误示例: {{lastJob.errors[0]}}</view>
   </view>
 </view>

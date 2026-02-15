@@ -1,6 +1,6 @@
 App({
   globalData: {
-    envId: 'your-cloud-env-id',
+    envId: 'cloud1-8g512wsr4a9dd559',
     session: null
   },
 

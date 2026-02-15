@@ -43,8 +43,8 @@ npm test
 
 ## 云函数部署建议
 
-1. 每个云函数目录部署对应 `index.js`。
-2. `_shared` 目录作为公共依赖一并上传。
+1. 先执行 `npm run prepare:cloudfunctions`，会自动把 `_shared` 同步到每个函数目录，并补齐函数依赖。
+2. 在微信开发者工具中，逐个函数目录执行“创建并部署：所有文件（云端安装依赖）”。
 3. 配置环境变量（按需）：
    - `ERP_ENDPOINT`
    - `ERP_TOKEN`
@@ -55,7 +55,7 @@ npm test
 
 1. 打开微信开发者工具，导入项目根目录 `/mnt/Files/weixing`。
 2. 在 `miniprogram/app.js` 修改 `envId` 为你的云环境 ID。
-3. 在开发者工具中上传并部署 `cloudfunctions` 下全部函数。
+3. 在终端执行 `npm run prepare:cloudfunctions` 后，再在开发者工具中上传并部署 `cloudfunctions` 下全部函数。
 4. 运行小程序，先在登录页创建用户。
 5. 建议配置 `FINANCE_PHONES` / `ADMIN_PHONES`，登录后自动开通对应角色。
 
